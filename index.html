@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imnotbad-scripts — Manual</title>
+  <meta name="description" content="Documentation for imnotbad-scripts — REAPER Lua/EEL scripts." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/highlight.css" />
+</head>
+<body>
+
+<header id="header">
+  <div class="header-left">
+    <button id="menu-toggle" aria-label="Toggle sidebar">☰</button>
+    <a href="#" class="logo" data-nav="home"><span>imnotbad</span>-scripts</a>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="search-input" placeholder="Search…  /" aria-label="Search" />
+      <div id="search-results"></div>
+    </div>
+  </div>
+  <div class="header-right">
+    <button id="lang-toggle" title="Switch language">
+      <span class="lang-icon">🌐</span>
+      <span class="lang-label">UA</span>
+    </button>
+    <button id="theme-toggle" title="Toggle theme">
+      <span class="theme-icon">☀</span>
+      <span class="theme-label">Light</span>
+    </button>
+    <a class="gh-link" href="https://github.com/imnotbad" target="_blank" rel="noopener" title="GitHub">
+      ⌥ <span class="gh-text">GitHub</span>
+    </a>
+  </div>
+</header>
+
+<div id="sidebar-overlay"></div>
+
+<div id="layout">
+
+  <nav id="sidebar" aria-label="Navigation">
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title collapsible" data-section="start">
+        <span data-i18n="nav_start">Getting Started</span> <span class="arrow">▾</span>
+      </div>
+      <ul class="sidebar-nav" id="nav-start">
+        <li><a href="#home"       data-nav="home">      <span class="nav-icon">🏠</span> <span data-i18n="nav_home">Home</span></a></li>
+        <li><a href="#install"    data-nav="install">   <span class="nav-icon">📦</span> <span data-i18n="nav_install">Installation</span></a></li>
+        <li><a href="#quickstart" data-nav="quickstart"><span class="nav-icon">⚡</span> <span data-i18n="nav_qs">Quick Start</span></a></li>
+        <li><a href="#changelog"  data-nav="changelog"> <span class="nav-icon">📋</span> <span data-i18n="nav_cl">Changelog</span> <span class="nav-tag">v2.1</span></a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title collapsible" data-section="scripts">
+        <span data-i18n="nav_scripts">Scripts</span> <span class="arrow">▾</span>
+      </div>
+      <ul class="sidebar-nav" id="nav-scripts">
+        <li class="has-sub">
+          <a href="#mixer-overview" data-nav="mixer-overview"><span class="nav-icon">🎚️</span> Mixer</a>
+          <ul class="sidebar-subnav">
+            <li><a href="#mixer-routing" data-nav="mixer-routing"><span data-i18n="nav_routing">Routing Utils</span></a></li>
+            <li><a href="#mixer-sends"   data-nav="mixer-sends">  <span data-i18n="nav_sends">Send Manager</span></a></li>
+          </ul>
+        </li>
+        <li class="has-sub">
+          <a href="#midi-overview" data-nav="midi-overview"><span class="nav-icon">🎛️</span> MIDI</a>
+          <ul class="sidebar-subnav">
+            <li><a href="#midi-humanize" data-nav="midi-humanize"><span data-i18n="nav_hum">Humanizer</span></a></li>
+            <li><a href="#midi-chorder"  data-nav="midi-chorder"> <span data-i18n="nav_chord">Chord Builder</span></a></li>
+          </ul>
+        </li>
+        <li class="has-sub">
+          <a href="#items-overview" data-nav="items-overview"><span class="nav-icon">✂️</span> Items</a>
+          <ul class="sidebar-subnav">
+            <li><a href="#items-batch" data-nav="items-batch"><span data-i18n="nav_batch">Batch Rename</span></a></li>
+            <li><a href="#items-color" data-nav="items-color"><span data-i18n="nav_color">Color Manager</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#transport" data-nav="transport"><span class="nav-icon">▶️</span> <span data-i18n="nav_transport">Transport</span></a></li>
+        <li><a href="#fx-chain"  data-nav="fx-chain"> <span class="nav-icon">🔧</span> FX Chain <span class="nav-tag">new</span></a></li>
+      </ul>
+    </div>
+
+  </nav>
+
+  <main id="content">
+
+    <!-- HOME -->
+    <div class="page" id="page-home">
+      <div class="breadcrumb"><span>imnotbad-scripts</span></div>
+      <h1>imnotbad-scripts</h1>
+      <div class="page-meta">
+        <span class="page-badge">v2.1.0</span>
+        <span class="page-version">REAPER 6.x / 7.x</span>
+      </div>
+      <p data-i18n="home_intro">A collection of Lua and EEL2 scripts for <a href="https://www.reaper.fm" target="_blank">REAPER DAW</a> focused on workflow speed, MIDI editing, mixer management, and custom GUI tools. Free and open source.</p>
+
+      <div class="cards">
+        <a class="card" data-nav="install">
+          <div class="card-icon">📦</div>
+          <div class="card-title" data-i18n="nav_install">Installation</div>
+          <div class="card-desc" data-i18n="card_install">Install via ReaPack or manually copy scripts to your Scripts folder.</div>
+        </a>
+        <a class="card" data-nav="quickstart">
+          <div class="card-icon">⚡</div>
+          <div class="card-title" data-i18n="nav_qs">Quick Start</div>
+          <div class="card-desc" data-i18n="card_qs">Run your first script and assign it to a toolbar button or shortcut.</div>
+        </a>
+        <a class="card" data-nav="mixer-overview">
+          <div class="card-icon">🎚️</div>
+          <div class="card-title" data-i18n="card_mixer_t">Mixer Scripts</div>
+          <div class="card-desc" data-i18n="card_mixer_d">Routing utilities, send managers, and quick-mix tools.</div>
+        </a>
+        <a class="card" data-nav="midi-overview">
+          <div class="card-icon">🎹</div>
+          <div class="card-title" data-i18n="card_midi_t">MIDI Tools</div>
+          <div class="card-desc" data-i18n="card_midi_d">Humanizer, chord builder, velocity shaping and more.</div>
+        </a>
+        <a class="card" data-nav="items-overview">
+          <div class="card-icon">✂️</div>
+          <div class="card-title" data-i18n="card_items_t">Items Scripts</div>
+          <div class="card-desc" data-i18n="card_items_d">Batch rename, color manager, region exporter.</div>
+        </a>
+        <a class="card" data-nav="fx-chain">
+          <div class="card-icon">🔧</div>
+          <div class="card-title">FX Chain</div>
+          <div class="card-desc" data-i18n="card_fx_d">Save and restore FX chains across sessions.</div>
+        </a>
+      </div>
+
+      <h2 data-i18n="home_features">Features</h2>
+      <ul>
+        <li>🎚️ <strong data-i18n="feat_mixer">Mixer utilities</strong> — <span data-i18n="feat_mixer_d">batch routing, send manager, colour-coded tracks</span></li>
+        <li>🎛️ <strong data-i18n="feat_midi">MIDI tools</strong> — <span data-i18n="feat_midi_d">humanizer, chord builder, velocity curves</span></li>
+        <li>✂️ <strong data-i18n="feat_items">Item tools</strong> — <span data-i18n="feat_items_d">batch rename, colour manager, region exporter</span></li>
+        <li>🔧 <strong data-i18n="feat_fx">FX Chain helpers</strong> — <span data-i18n="feat_fx_d">save/load chains, bypass toggle scripts</span></li>
+        <li>⚡ <strong data-i18n="feat_transport">Transport shortcuts</strong> — <span data-i18n="feat_transport_d">pre-roll toggle, loop point snapping</span></li>
+        <li>📦 <strong data-i18n="feat_lib">Shared lib</strong> — <span data-i18n="feat_lib_d">reusable Lua module with helpers for tracks, items, MIDI and GUI</span></li>
+      </ul>
+
+      <h2 data-i18n="home_req">Requirements</h2>
+      <div class="table-wrap">
+        <table>
+          <tr><th data-i18n="th_req">Requirement</th><th data-i18n="th_ver">Version</th><th data-i18n="th_notes">Notes</th></tr>
+          <tr><td>REAPER</td><td>6.40+</td><td data-i18n="req_reaper">7.x recommended</td></tr>
+          <tr><td>ReaImGui</td><td>0.8+</td><td data-i18n="req_imgui">Required for GUI scripts</td></tr>
+          <tr><td>ReaPack</td><td>1.2+</td><td data-i18n="req_reapack">Optional, for easy install</td></tr>
+          <tr><td>SWS Extension</td><td>2.13+</td><td data-i18n="req_sws">Some scripts use SWS API</td></tr>
+        </table>
+      </div>
+
+      <hr class="divider" />
+      <footer class="page-footer">
+        <span>© 2024 imnotbad-scripts</span>
+        <span>
+          <a href="#changelog" data-nav="changelog" data-i18n="nav_cl">Changelog</a> ·
+          <a href="https://github.com/imnotbad" target="_blank">GitHub</a>
+        </span>
+      </footer>
+    </div>
+
+    <!-- INSTALL -->
+    <div class="page" id="page-install">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span> <span data-i18n="nav_install">Installation</span>
+      </div>
+      <h1 data-i18n="nav_install">Installation</h1>
+      <div class="page-meta"><span class="page-badge" data-i18n="badge_setup">Setup</span></div>
+      <p data-i18n="install_intro">There are two ways to install imnotbad-scripts: via <strong>ReaPack</strong> (recommended) or manually.</p>
+
+      <h2 data-i18n="install_m1">Method 1 — ReaPack (Recommended)</h2>
+      <p data-i18n="install_m1_desc">ReaPack is a package manager for REAPER. Download it from <a href="https://reapack.com" target="_blank">reapack.com</a>.</p>
+      <ol>
+        <li data-i18n="install_step1">Open REAPER → <code>Extensions → ReaPack → Import repositories…</code></li>
+        <li data-i18n="install_step2">Paste the URL below and click <strong>OK</strong>:</li>
+      </ol>
+      <pre data-lang="url"><code>https://raw.githubusercontent.com/imnotbad/imnotbad-scripts/main/index.xml</code></pre>
+      <ol start="3">
+        <li data-i18n="install_step3">Go to <code>Extensions → ReaPack → Browse packages…</code></li>
+        <li data-i18n="install_step4">Search for <strong>imnotbad</strong>, select scripts, click <strong>Install/update selection</strong>.</li>
+        <li data-i18n="install_step5">Restart REAPER when prompted.</li>
+      </ol>
+      <div class="callout callout-tip">
+        <div class="callout-title">💡 <span data-i18n="tip">Tip</span></div>
+        <p data-i18n="install_tip">The shared <code>imnotbad_lib.lua</code> library is installed automatically as a dependency.</p>
+      </div>
+
+      <h2 data-i18n="install_m2">Method 2 — Manual</h2>
+      <ol>
+        <li data-i18n="install_m2_step1">Clone the repository:</li>
+      </ol>
+      <pre data-lang="bash"><code><span class="tok-fn">git</span> clone https://github.com/imnotbad/imnotbad-scripts.git</code></pre>
+      <ol start="2">
+        <li data-i18n="install_m2_step2">Copy files to your REAPER Scripts folder:</li>
+      </ol>
+      <pre data-lang="bash"><code><span class="tok-cmt"># Windows</span>
+%APPDATA%\REAPER\Scripts\imnotbad-scripts\
+
+<span class="tok-cmt"># macOS</span>
+~/Library/Application Support/REAPER/Scripts/imnotbad-scripts/
+
+<span class="tok-cmt"># Linux</span>
+~/.config/REAPER/Scripts/imnotbad-scripts/</code></pre>
+
+      <div class="callout callout-warn">
+        <div class="callout-title">⚠ <span data-i18n="warning">Warning</span></div>
+        <p data-i18n="install_warn">Make sure <code>imnotbad_lib.lua</code> is in the same folder as the other scripts.</p>
+      </div>
+
+      <h2 data-i18n="install_verify">Verifying the Install</h2>
+      <pre data-lang="lua"><code><span class="tok-kw">local</span> lib <span class="tok-op">=</span> <span class="tok-fn">dofile</span>(<span class="tok-fn">reaper.GetResourcePath</span>() <span class="tok-op">..</span> <span class="tok-str">"/Scripts/imnotbad-scripts/imnotbad_lib.lua"</span>)
+<span class="tok-fn">reaper.ShowConsoleMsg</span>(<span class="tok-str">"version: "</span> <span class="tok-op">..</span> lib.version <span class="tok-op">..</span> <span class="tok-str">"\n"</span>)</code></pre>
+      <p data-i18n="install_expected"><strong>Expected:</strong> <code>version: 2.1.0</code></p>
+    </div>
+
+    <!-- QUICKSTART -->
+    <div class="page" id="page-quickstart">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span> <span data-i18n="nav_qs">Quick Start</span>
+      </div>
+      <h1 data-i18n="nav_qs">Quick Start</h1>
+      <div class="page-meta"><span class="page-badge" data-i18n="badge_beginner">Beginner</span></div>
+      <p data-i18n="qs_intro">Run your first script and set up a keyboard shortcut in under 5 minutes.</p>
+
+      <h2 data-i18n="qs_h1">1. Run a Script</h2>
+      <p data-i18n="qs_p1">Open the REAPER Action List (<code>Shift+/</code>), click <strong>Load…</strong>, navigate to your scripts folder, and double-click any script to run it.</p>
+
+      <h2 data-i18n="qs_h2">2. Assign a Keyboard Shortcut</h2>
+      <p data-i18n="qs_p2">In the Action List, select the action and click <strong>Add…</strong>. Press your desired key combination and click <strong>OK</strong>.</p>
+      <div class="callout callout-tip">
+        <div class="callout-title">💡 <span data-i18n="tip">Tip</span></div>
+        <p data-i18n="qs_tip">Good choices: <code>Ctrl+Shift+Letter</code> or <code>F9</code>–<code>F12</code>.</p>
+      </div>
+
+      <h2 data-i18n="qs_h3">3. Add to Toolbar</h2>
+      <p data-i18n="qs_p3">Right-click the toolbar → <strong>Customize toolbar…</strong> → find your script → click <strong>Add</strong>.</p>
+
+      <h2 data-i18n="qs_h4">4. Your First Custom Script</h2>
+      <pre data-lang="lua"><code><span class="tok-cmt">-- my_script.lua</span>
+<span class="tok-kw">local</span> script_path <span class="tok-op">=</span> <span class="tok-fn">debug.getinfo</span>(<span class="tok-num">1</span>, <span class="tok-str">"S"</span>).source<span class="tok-op">:</span><span class="tok-fn">match</span>(<span class="tok-str">"@?(.*[/\\])"</span>)
+<span class="tok-kw">local</span> lib <span class="tok-op">=</span> <span class="tok-fn">dofile</span>(script_path <span class="tok-op">..</span> <span class="tok-str">"imnotbad_lib.lua"</span>)
+
+<span class="tok-kw">local</span> tracks <span class="tok-op">=</span> lib.tracks.<span class="tok-fn">getSelected</span>()
+<span class="tok-kw">for</span> _, t <span class="tok-kw">in</span> <span class="tok-fn">ipairs</span>(tracks) <span class="tok-kw">do</span>
+  <span class="tok-fn">reaper.ShowConsoleMsg</span>(lib.tracks.<span class="tok-fn">getName</span>(t) <span class="tok-op">..</span> <span class="tok-str">"\n"</span>)
+<span class="tok-kw">end</span></code></pre>
+    </div>
+
+    <!-- CHANGELOG -->
+    <div class="page" id="page-changelog">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span> <span data-i18n="nav_cl">Changelog</span>
+      </div>
+      <h1 data-i18n="nav_cl">Changelog</h1>
+      <div class="page-meta"><span class="page-badge" data-i18n="badge_releases">Releases</span></div>
+
+      <h2>v2.1.0 — 2024-11-12</h2>
+      <ul>
+        <li>✨ <span data-i18n="cl_210_1">Added <strong>FX Chain</strong> save/restore script</span></li>
+        <li>✨ <span data-i18n="cl_210_2">Added <code>lib.gui.popup()</code> helper</span></li>
+        <li>🐛 <span data-i18n="cl_210_3">Fixed MIDI Humanizer not respecting note-off velocity</span></li>
+        <li>🐛 <span data-i18n="cl_210_4">Fixed Send Manager crash when project has no tracks</span></li>
+        <li>⚡ <span data-i18n="cl_210_5">Improved batch rename performance on large projects</span></li>
+      </ul>
+
+      <h2>v2.0.0 — 2024-09-03</h2>
+      <ul>
+        <li>🔥 <span data-i18n="cl_200_1">Complete rewrite of <code>imnotbad_lib.lua</code> — breaking changes</span></li>
+        <li>✨ <span data-i18n="cl_200_2">New ImGui-based GUIs for Mixer and MIDI tools</span></li>
+        <li>✨ <span data-i18n="cl_200_3">Added Chord Builder script</span></li>
+        <li>🗑️ <span data-i18n="cl_200_4">Removed deprecated EEL versions of Mixer scripts</span></li>
+      </ul>
+
+      <h2>v1.3.2 — 2024-05-17</h2>
+      <ul>
+        <li>🐛 <span data-i18n="cl_132_1">Fixed routing script on macOS with non-ASCII track names</span></li>
+        <li>⚡ <span data-i18n="cl_132_2">Transport script now respects REAPER's metronome state</span></li>
+      </ul>
+    </div>
+
+    <!-- MIXER OVERVIEW -->
+    <div class="page" id="page-mixer-overview">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span> Scripts <span>›</span> Mixer
+      </div>
+      <h1 data-i18n="card_mixer_t">Mixer Scripts</h1>
+      <div class="page-meta"><span class="page-badge">Scripts</span></div>
+      <p data-i18n="mixer_intro">Scripts for managing routing, sends, and visual organisation of the REAPER mixer.</p>
+      <div class="cards">
+        <a class="card" data-nav="mixer-routing">
+          <div class="card-icon">🔀</div>
+          <div class="card-title" data-i18n="nav_routing">Routing Utils</div>
+          <div class="card-desc" data-i18n="routing_desc">Connect, disconnect and audit track routing in bulk.</div>
+        </a>
+        <a class="card" data-nav="mixer-sends">
+          <div class="card-icon">📡</div>
+          <div class="card-title" data-i18n="nav_sends">Send Manager</div>
+          <div class="card-desc" data-i18n="sends_desc">GUI to inspect and modify all sends in the project.</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- MIXER ROUTING -->
+    <div class="page" id="page-mixer-routing">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span>
+        <a href="#mixer-overview" data-nav="mixer-overview">Mixer</a> <span>›</span>
+        <span data-i18n="nav_routing">Routing Utils</span>
+      </div>
+      <h1 data-i18n="nav_routing">Routing Utils</h1>
+      <div class="page-meta"><span class="page-badge">Script</span><span class="page-version">imnotbad_mixer_routing.lua</span></div>
+      <p data-i18n="routing_intro">Bulk-editing track routing. Works on selection or all tracks.</p>
+
+      <h2 data-i18n="routing_actions">Actions</h2>
+      <div class="table-wrap">
+        <table>
+          <tr><th data-i18n="th_action">Action name</th><th data-i18n="th_desc">Description</th></tr>
+          <tr><td><code>imnotbad: Route selected to parent</code></td><td data-i18n="routing_a1">Routes all selected tracks to their parent folder track.</td></tr>
+          <tr><td><code>imnotbad: Disconnect all sends</code></td><td data-i18n="routing_a2">Removes every send from selected tracks.</td></tr>
+          <tr><td><code>imnotbad: Audit routing (console)</code></td><td data-i18n="routing_a3">Prints a routing diagram to the REAPER console.</td></tr>
+        </table>
+      </div>
+
+      <h2 data-i18n="routing_example">Example</h2>
+      <pre data-lang="lua"><code><span class="tok-fn">reaper.Undo_BeginBlock</span>()
+<span class="tok-kw">for</span> _, track <span class="tok-kw">in</span> <span class="tok-fn">ipairs</span>(lib.tracks.<span class="tok-fn">getSelected</span>()) <span class="tok-kw">do</span>
+  <span class="tok-kw">local</span> parent <span class="tok-op">=</span> <span class="tok-fn">reaper.GetParentTrack</span>(track)
+  <span class="tok-kw">if</span> parent <span class="tok-kw">then</span> lib.tracks.<span class="tok-fn">setSend</span>(track, parent, <span class="tok-bool">true</span>) <span class="tok-kw">end</span>
+<span class="tok-kw">end</span>
+<span class="tok-fn">reaper.Undo_EndBlock</span>(<span class="tok-str">"Route selected to parent"</span>, <span class="tok-op">-</span><span class="tok-num">1</span>)</code></pre>
+    </div>
+
+    <!-- MIXER SENDS -->
+    <div class="page" id="page-mixer-sends">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span>
+        <a href="#mixer-overview" data-nav="mixer-overview">Mixer</a> <span>›</span>
+        <span data-i18n="nav_sends">Send Manager</span>
+      </div>
+      <h1 data-i18n="nav_sends">Send Manager</h1>
+      <div class="page-meta"><span class="page-badge">GUI Script</span><span class="page-version">imnotbad_send_manager.lua</span></div>
+      <p data-i18n="sends_intro">An ImGui window listing all project sends with live volume, pan, and mute controls.</p>
+      <h2 data-i18n="sends_usage">Usage</h2>
+      <p data-i18n="sends_usage_p">Run <code>imnotbad: Open Send Manager</code>. Click any row to select source/destination tracks.</p>
+      <div class="callout callout-tip">
+        <div class="callout-title">💡 <span data-i18n="tip">Tip</span></div>
+        <p data-i18n="sends_tip">Dock the window to the REAPER Docker: right-click title bar → <strong>Dock window</strong>.</p>
+      </div>
+    </div>
+
+    <!-- MIDI OVERVIEW -->
+    <div class="page" id="page-midi-overview">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span> Scripts <span>›</span> MIDI
+      </div>
+      <h1 data-i18n="card_midi_t">MIDI Scripts</h1>
+      <div class="page-meta"><span class="page-badge">Scripts</span></div>
+      <p data-i18n="midi_intro">Tools for editing, shaping and generating MIDI inside REAPER's MIDI editor.</p>
+      <div class="cards">
+        <a class="card" data-nav="midi-humanize">
+          <div class="card-icon">🎲</div>
+          <div class="card-title" data-i18n="nav_hum">Humanizer</div>
+          <div class="card-desc" data-i18n="hum_desc">Add subtle randomness to velocity and timing.</div>
+        </a>
+        <a class="card" data-nav="midi-chorder">
+          <div class="card-icon">🎹</div>
+          <div class="card-title" data-i18n="nav_chord">Chord Builder</div>
+          <div class="card-desc" data-i18n="chord_desc">Expand single notes into chords with one action.</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- MIDI HUMANIZE -->
+    <div class="page" id="page-midi-humanize">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span>
+        <a href="#midi-overview" data-nav="midi-overview">MIDI</a> <span>›</span>
+        <span data-i18n="nav_hum">Humanizer</span>
+      </div>
+      <h1 data-i18n="nav_hum">MIDI Humanizer</h1>
+      <div class="page-meta"><span class="page-badge">Script</span><span class="page-version">imnotbad_midi_humanize.lua</span></div>
+      <p data-i18n="hum_intro">Adds controlled randomness to MIDI notes — velocity, position, and note length.</p>
+
+      <h2 data-i18n="params">Parameters</h2>
+      <div class="param-table">
+        <div class="param-row"><span data-i18n="th_param">Parameter</span><span data-i18n="th_type">Type</span><span data-i18n="th_desc">Description</span></div>
+        <div class="param-row"><span class="param-name">vel_range</span><span class="param-type">integer</span><span data-i18n="hum_p1">±velocity variance (0–64). Default: <code>12</code></span></div>
+        <div class="param-row"><span class="param-name">pos_range</span><span class="param-type">number</span><span data-i18n="hum_p2">±position in beats (0–0.5). Default: <code>0.01</code></span></div>
+        <div class="param-row"><span class="param-name">len_range</span><span class="param-type">number</span><span data-i18n="hum_p3">±length in beats (0–0.25). Default: <code>0.0</code></span></div>
+      </div>
+
+      <h2 data-i18n="example">Example</h2>
+      <pre data-lang="lua"><code>lib.midi.<span class="tok-fn">humanize</span>({ vel_range <span class="tok-op">=</span> <span class="tok-num">15</span>, pos_range <span class="tok-op">=</span> <span class="tok-num">0.008</span> })</code></pre>
+    </div>
+
+    <!-- MIDI CHORDER -->
+    <div class="page" id="page-midi-chorder">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span>
+        <a href="#midi-overview" data-nav="midi-overview">MIDI</a> <span>›</span>
+        <span data-i18n="nav_chord">Chord Builder</span>
+      </div>
+      <h1 data-i18n="nav_chord">Chord Builder</h1>
+      <div class="page-meta"><span class="page-badge">Script</span><span class="page-version">imnotbad_midi_chorder.lua</span></div>
+      <p data-i18n="chord_intro">Expands selected notes into chords. Supports major, minor, dom7, and custom intervals.</p>
+
+      <h2 data-i18n="chord_types">Built-in Chord Types</h2>
+      <div class="table-wrap">
+        <table>
+          <tr><th data-i18n="th_name">Name</th><th data-i18n="th_intervals">Intervals (semitones)</th></tr>
+          <tr><td>Major</td><td>0, 4, 7</td></tr>
+          <tr><td>Minor</td><td>0, 3, 7</td></tr>
+          <tr><td>Dom7</td><td>0, 4, 7, 10</td></tr>
+          <tr><td>Maj7</td><td>0, 4, 7, 11</td></tr>
+          <tr><td>Sus4</td><td>0, 5, 7</td></tr>
+          <tr><td data-i18n="chord_custom">Custom</td><td data-i18n="chord_custom_d">User-defined array</td></tr>
+        </table>
+      </div>
+      <pre data-lang="lua"><code>lib.midi.<span class="tok-fn">addChord</span>(<span class="tok-str">"minor"</span>)
+lib.midi.<span class="tok-fn">addChord</span>({ <span class="tok-num">0</span>, <span class="tok-num">5</span>, <span class="tok-num">9</span>, <span class="tok-num">14</span> }) <span class="tok-cmt">-- custom</span></code></pre>
+    </div>
+
+    <!-- ITEMS OVERVIEW -->
+    <div class="page" id="page-items-overview">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span> Scripts <span>›</span> Items
+      </div>
+      <h1 data-i18n="card_items_t">Items Scripts</h1>
+      <div class="page-meta"><span class="page-badge">Scripts</span></div>
+      <p data-i18n="items_intro">Batch-processing, renaming, and colour management for media items.</p>
+      <div class="cards">
+        <a class="card" data-nav="items-batch">
+          <div class="card-icon">✏️</div>
+          <div class="card-title" data-i18n="nav_batch">Batch Rename</div>
+          <div class="card-desc" data-i18n="batch_desc">Rename multiple items with patterns and counters.</div>
+        </a>
+        <a class="card" data-nav="items-color">
+          <div class="card-icon">🎨</div>
+          <div class="card-title" data-i18n="nav_color">Color Manager</div>
+          <div class="card-desc" data-i18n="color_desc">Apply colour schemes based on track, type, or pattern.</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ITEMS BATCH -->
+    <div class="page" id="page-items-batch">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span>
+        <a href="#items-overview" data-nav="items-overview">Items</a> <span>›</span>
+        <span data-i18n="nav_batch">Batch Rename</span>
+      </div>
+      <h1 data-i18n="nav_batch">Batch Rename</h1>
+      <div class="page-meta"><span class="page-badge">Script</span><span class="page-version">imnotbad_items_batch_rename.lua</span></div>
+      <p data-i18n="batch_intro">Rename selected items using a pattern. Supports <code>{n}</code> counter, <code>{track}</code> name, <code>{date}</code> tokens.</p>
+      <pre data-lang="lua"><code><span class="tok-cmt">-- Kick_001, Kick_002 …</span>
+lib.items.<span class="tok-fn">batchRename</span>(<span class="tok-str">"Kick_{n:03}"</span>)</code></pre>
+    </div>
+
+    <!-- ITEMS COLOR -->
+    <div class="page" id="page-items-color">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span>
+        <a href="#items-overview" data-nav="items-overview">Items</a> <span>›</span>
+        <span data-i18n="nav_color">Color Manager</span>
+      </div>
+      <h1 data-i18n="nav_color">Color Manager</h1>
+      <div class="page-meta"><span class="page-badge">GUI Script</span><span class="page-version">imnotbad_items_color.lua</span></div>
+      <p data-i18n="color_intro">ImGui colour-picker for applying colours to selected items or all items on a track.</p>
+    </div>
+
+    <!-- TRANSPORT -->
+    <div class="page" id="page-transport">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span> Scripts <span>›</span>
+        <span data-i18n="nav_transport">Transport</span>
+      </div>
+      <h1 data-i18n="nav_transport">Transport Scripts</h1>
+      <div class="page-meta"><span class="page-badge">Scripts</span></div>
+      <p data-i18n="transport_intro">Quick-action scripts for playback, record arming, loop points, and metronome.</p>
+      <ul>
+        <li><code>imnotbad: Toggle pre-roll</code> — <span data-i18n="transport_a1">toggles pre-roll recording on/off</span></li>
+        <li><code>imnotbad: Snap loop to item</code> — <span data-i18n="transport_a2">sets loop points to bounds of selected items</span></li>
+        <li><code>imnotbad: Toggle metronome + count-in</code> — <span data-i18n="transport_a3">enables metronome and count-in together</span></li>
+      </ul>
+    </div>
+
+    <!-- FX CHAIN -->
+    <div class="page" id="page-fx-chain">
+      <div class="breadcrumb">
+        <a href="#home" data-nav="home" data-i18n="nav_home">Home</a> <span>›</span> Scripts <span>›</span> FX Chain
+      </div>
+      <h1>FX Chain</h1>
+      <div class="page-meta">
+        <span class="page-badge">Script</span>
+        <span class="page-version">imnotbad_fx_chain.lua</span>
+        <span class="page-badge" data-i18n="badge_new">new in v2.1</span>
+      </div>
+      <p data-i18n="fx_intro">Save and restore entire FX chains (including plugin states) to named slots.</p>
+
+      <h2 data-i18n="sends_usage">Usage</h2>
+      <ul>
+        <li><strong data-i18n="fx_save">Save chain</strong>: <span data-i18n="fx_save_d">Select a track → <code>imnotbad: Save FX chain…</code> → enter a name.</span></li>
+        <li><strong data-i18n="fx_load">Restore chain</strong>: <span data-i18n="fx_load_d">Select a track → <code>imnotbad: Load FX chain…</code> → pick a slot.</span></li>
+      </ul>
+      <div class="callout callout-warn">
+        <div class="callout-title">⚠ <span data-i18n="note">Note</span></div>
+        <p data-i18n="fx_warn">Chains are saved as <code>.rfxchain</code> files in your REAPER FXChains folder, compatible with the built-in chain browser.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
