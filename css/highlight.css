@@ -1,0 +1,63 @@
+/* ============================================
+   imnotbad-scripts — Syntax Highlight
+   ============================================ */
+
+/* Token colors — dark theme */
+[data-theme="dark"] .tok-kw    { color: #c792ea; }
+[data-theme="dark"] .tok-fn    { color: #82aaff; }
+[data-theme="dark"] .tok-str   { color: #c3e88d; }
+[data-theme="dark"] .tok-num   { color: #f78c6c; }
+[data-theme="dark"] .tok-cmt   { color: #546e7a; font-style: italic; }
+[data-theme="dark"] .tok-var   { color: #e8e8e2; }
+[data-theme="dark"] .tok-op    { color: #89ddff; }
+[data-theme="dark"] .tok-type  { color: #ffcb6b; }
+[data-theme="dark"] .tok-bool  { color: #f78c6c; }
+[data-theme="dark"] .tok-punct { color: #89ddff; }
+
+/* Token colors — light theme */
+[data-theme="light"] .tok-kw    { color: #7c3aed; }
+[data-theme="light"] .tok-fn    { color: #1d4ed8; }
+[data-theme="light"] .tok-str   { color: #059669; }
+[data-theme="light"] .tok-num   { color: #b45309; }
+[data-theme="light"] .tok-cmt   { color: #9ca3af; font-style: italic; }
+[data-theme="light"] .tok-var   { color: #1a1a18; }
+[data-theme="light"] .tok-op    { color: #0284c7; }
+[data-theme="light"] .tok-type  { color: #b45309; }
+[data-theme="light"] .tok-bool  { color: #dc2626; }
+[data-theme="light"] .tok-punct { color: #4b5563; }
+
+/* Line numbers */
+pre.line-nums {
+  counter-reset: line;
+  padding-left: 56px;
+}
+pre.line-nums code .line {
+  display: block;
+  position: relative;
+}
+pre.line-nums code .line::before {
+  counter-increment: line;
+  content: counter(line);
+  position: absolute;
+  left: -44px;
+  width: 28px;
+  text-align: right;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  user-select: none;
+  opacity: 0.5;
+}
+
+/* Language badge on code blocks */
+pre[data-lang]::after {
+  content: attr(data-lang);
+  position: absolute;
+  top: 10px;
+  right: 48px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
