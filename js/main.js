@@ -22,10 +22,10 @@
     const lang  = document.documentElement.getAttribute('data-lang') || 'en';
     if (theme === 'dark') {
       if (icon)  icon.textContent  = '☀';
-      if (label) label.textContent = lang === 'ua' ? 'Світла' : 'Light';
+      if (label) label.textContent = lang === 'ua' ? '' : '';
     } else {
       if (icon)  icon.textContent  = '🌙';
-      if (label) label.textContent = lang === 'ua' ? 'Темна' : 'Dark';
+      if (label) label.textContent = lang === 'ua' ? '' : '';
     }
     localStorage.setItem(THEME_KEY, theme);
   }
